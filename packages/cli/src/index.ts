@@ -74,11 +74,12 @@ export const createCommand = <
     const F extends FlagDefs = {},
 >(
     command: Command<A, F>,
-): Command<A, F> => command
+) => command
 
-class UsageError extends Error {}
+const usageError = (message: string) =>
+    Object.assign(new Error(message), { code: "ERR_USAGE" })
 
-const buildTree = async (dir: string | URL): Promise<Node> => {
+const buildTree = async (dir: string | URL) => {
     const root: Node = { children: new Map() }
     for (const { segments, file } of await scan(dir)) {
         let node = root
@@ -93,22 +94,22 @@ const buildTree = async (dir: string | URL): Promise<Node> => {
     return root
 }
 
-const loadCommand = async (file: string): Promise<Command> =>
-    (await load<{ default: Command }>(file)).default
+const loadCommand = async (file: string) =>
+    (await load(file)).default as Command
 
-const pad = (rows: [string, string][]): string[] => {
+const pad = (rows: [string, string][]) => {
     const width = Math.max(...rows.map(([left]) => left.length))
     return rows.map(([left, right]) =>
         `  ${left.padEnd(width)}  ${right}`.trimEnd(),
     )
 }
 
-const argLabel = (name: string, def: ArgDef): string => {
+const argLabel = (name: string, def: ArgDef) => {
     const label = def.variadic ? `${name}...` : name
     return def.required ? `<${label}>` : `[${label}]`
 }
 
-const flagLabel = (name: string, def: FlagDef): string =>
+const flagLabel = (name: string, def: FlagDef) =>
     `${def.short ? `-${def.short}, ` : "    "}--${name}${def.type === "boolean" ? "" : " <value>"}`
 
 const help = async (
@@ -116,13 +117,13 @@ const help = async (
     path: string[],
     node: Node,
     command?: Command,
-): Promise<string> => {
+) => {
     const lines: string[] = []
     const args = Object.entries(command?.args ?? {})
     const flags = Object.entries(command?.flags ?? {})
     const usage = [name, ...path]
     if (node.children.size) usage.push("<command>")
-    if (command) usage.push(...args.map(([key, def]) => argLabel(key, def)))
+    usage.push(...args.map(([key, def]) => argLabel(key, def)))
     if (flags.length) usage.push("[options]")
     if (command?.description) lines.push(command.description, "")
     lines.push(`Usage: ${usage.join(" ")}`)
@@ -154,10 +155,7 @@ const help = async (
     return lines.join("\n")
 }
 
-const parse = (
-    command: Command,
-    argv: string[],
-): { args: ArgDefs; flags: FlagDefs } => {
+const parse = (command: Command, argv: string[]) => {
     const flagDefs = command.flags ?? {}
     const options: ParseArgsOptionsConfig = Object.fromEntries(
         Object.entries(flagDefs).map(
@@ -187,7 +185,7 @@ const parse = (
             def.required &&
             (value === undefined || (Array.isArray(value) && !value.length))
         ) {
-            throw new UsageError(`Missing required option --${key}`)
+            throw usageError(`Missing required option --${key}`)
         }
         flags[key] = value
     }
@@ -199,7 +197,7 @@ const parse = (
             def.required &&
             (value === undefined || (Array.isArray(value) && !value.length))
         ) {
-            throw new UsageError(`Missing required argument <${key}>`)
+            throw usageError(`Missing required argument <${key}>`)
         }
         if (def.variadic && index !== entries.length - 1) {
             throw new Error(`Variadic argument <${key}> must be last`)
@@ -207,7 +205,7 @@ const parse = (
         args[key] = value
     }
     if (positionals.length)
-        throw new UsageError(`Unexpected argument ${positionals[0]}`)
+        throw usageError(`Unexpected argument ${positionals[0]}`)
     return { args, flags } as { args: ArgDefs; flags: FlagDefs }
 }
 
@@ -215,7 +213,7 @@ export const runCli = async ({
     name,
     dir,
     argv = process.argv.slice(2),
-}: CliOptions): Promise<void> => {
+}: CliOptions) => {
     let node = await buildTree(dir)
     const path: string[] = []
     let index = 0
@@ -246,12 +244,9 @@ export const runCli = async ({
     try {
         parsed = parse(command, rest)
     } catch (error) {
-        if (
-            !(error instanceof UsageError) &&
-            !(error as { code?: string }).code?.startsWith("ERR_PARSE_ARGS")
-        ) {
+        const code = (error as { code?: string }).code
+        if (code !== "ERR_USAGE" && !code?.startsWith("ERR_PARSE_ARGS"))
             throw error
-        }
         console.error(
             `${(error as Error).message}\n\n${await help(name, path, node, command)}`,
         )

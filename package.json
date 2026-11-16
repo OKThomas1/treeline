@@ -6,7 +6,7 @@
     ],
     "type": "module",
     "scripts": {
-        "build": "yarn workspaces foreach -A --exclude treeline --exclude @treeline/core run build",
+        "build": "yarn workspaces foreach -A --exclude treeline run build",
         "typecheck": "tsc -b",
         "lint": "oxlint",
         "fmt": "oxfmt",

@@ -9,22 +9,29 @@ export type RouteFile = {
 
 const extensions = new Set([".ts", ".mts", ".js", ".mjs"])
 
-const isRouteFile = (name: string): boolean =>
+const isRouteFile = (name: string) =>
     extensions.has(extname(name)) &&
-    !/\.d\.[mc]?ts$/.test(name) &&
+    !name.slice(0, -extname(name).length).endsWith(".d") &&
     !name.startsWith("_")
 
-export const toPath = (dir: string | URL): string =>
+const toPath = (dir: string | URL) =>
     dir instanceof URL || dir.startsWith("file:") ? fileURLToPath(dir) : dir
 
-export const scan = async (dir: string | URL): Promise<RouteFile[]> => {
+export const scan = async (dir: string | URL) => {
     const root = toPath(dir)
     const entries = await readdir(root, {
         recursive: true,
         withFileTypes: true,
     })
     return entries
-        .filter((entry) => entry.isFile() && isRouteFile(entry.name))
+        .filter(
+            (entry) =>
+                entry.isFile() &&
+                isRouteFile(entry.name) &&
+                !relative(root, entry.parentPath)
+                    .split(sep)
+                    .some((part) => part.startsWith("_")),
+        )
         .map((entry) => {
             const file = join(entry.parentPath, entry.name)
             const parts = relative(root, file).split(sep)
@@ -35,5 +42,5 @@ export const scan = async (dir: string | URL): Promise<RouteFile[]> => {
         .toSorted((a, b) => a.file.localeCompare(b.file))
 }
 
-export const load = async <T>(file: string): Promise<T> =>
-    (await import(pathToFileURL(file).href)) as T
+export const load = async (file: string): Promise<Record<string, unknown>> =>
+    await import(pathToFileURL(file).href)
