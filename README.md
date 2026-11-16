@@ -8,10 +8,17 @@ A small file-based router: the folder tree is the route table.
 
 ## Install
 
-Treeline is not on npm. Install a package from the git repo, pinned to a tag:
+Treeline is not on npm. Yarn 4 fetches git dependencies only from approved repositories, so add it to `.yarnrc.yml`:
+
+```yaml
+approvedGitRepositories:
+    - "https://github.com/OKThomas1/treeline.git"
+```
+
+Then install a package from the repo, pinned to a tag:
 
 ```sh
-yarn add "@treeline/cli@github:<owner>/treeline#workspace=@treeline/cli&tag=<tag>"
+yarn add "@treeline/cli@github:OKThomas1/treeline#workspace=@treeline/cli&tag=v0.1.0"
 ```
 
 The package builds when it is installed.
