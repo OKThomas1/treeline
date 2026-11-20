@@ -1,6 +1,6 @@
 import type { IncomingMessage, ServerResponse } from "node:http"
 import { METHODS } from "node:http"
-import { load, scan } from "@treeline/core"
+import { load, scan } from "@waymark/core"
 import Router from "find-my-way"
 
 export type Params = Record<string, string | undefined>

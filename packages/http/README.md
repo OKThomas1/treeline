@@ -1,4 +1,4 @@
-# @treeline/http
+# @waymark/http
 
 File-based routes for an HTTP server, on [find-my-way](https://github.com/delvedor/find-my-way).
 
@@ -18,7 +18,7 @@ routes/
 
 ```ts
 import { createServer } from "node:http"
-import { createRouter } from "@treeline/http"
+import { createRouter } from "@waymark/http"
 
 const router = await createRouter({
     dir: new URL("./routes", import.meta.url),
@@ -40,7 +40,7 @@ export const GET = (req, res, params, searchParams) => res.end("ok")
 Wrap a handler in `createRoute` to have it typed:
 
 ```ts
-import { createRoute } from "@treeline/http"
+import { createRoute } from "@waymark/http"
 
 export const POST = createRoute<{ id: string }>((req, res, params) => {
     res.end(params.id)

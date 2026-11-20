@@ -1,6 +1,6 @@
 {
-    "name": "@treeline/http",
-    "version": "0.1.0",
+    "name": "@waymark/http",
+    "version": "0.2.0",
     "files": [
         "dist"
     ],
@@ -19,7 +19,7 @@
         "find-my-way": "^9.10.0"
     },
     "devDependencies": {
-        "@treeline/core": "workspace:^",
+        "@waymark/core": "workspace:^",
         "tsdown": "^0.23.7"
     }
 }

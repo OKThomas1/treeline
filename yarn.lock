@@ -450,31 +450,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@treeline/cli@workspace:packages/cli":
-  version: 0.0.0-use.local
-  resolution: "@treeline/cli@workspace:packages/cli"
-  dependencies:
-    "@treeline/core": "workspace:^"
-    tsdown: "npm:^0.23.7"
-  languageName: unknown
-  linkType: soft
-
-"@treeline/core@workspace:^, @treeline/core@workspace:packages/core":
-  version: 0.0.0-use.local
-  resolution: "@treeline/core@workspace:packages/core"
-  languageName: unknown
-  linkType: soft
-
-"@treeline/http@workspace:packages/http":
-  version: 0.0.0-use.local
-  resolution: "@treeline/http@workspace:packages/http"
-  dependencies:
-    "@treeline/core": "workspace:^"
-    find-my-way: "npm:^9.10.0"
-    tsdown: "npm:^0.23.7"
-  languageName: unknown
-  linkType: soft
-
 "@tybys/wasm-util@npm:^0.10.3":
   version: 0.10.4
   resolution: "@tybys/wasm-util@npm:0.10.4"
@@ -632,6 +607,31 @@ __metadata:
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
+
+"@waymark/cli@workspace:packages/cli":
+  version: 0.0.0-use.local
+  resolution: "@waymark/cli@workspace:packages/cli"
+  dependencies:
+    "@waymark/core": "workspace:^"
+    tsdown: "npm:^0.23.7"
+  languageName: unknown
+  linkType: soft
+
+"@waymark/core@workspace:^, @waymark/core@workspace:packages/core":
+  version: 0.0.0-use.local
+  resolution: "@waymark/core@workspace:packages/core"
+  languageName: unknown
+  linkType: soft
+
+"@waymark/http@workspace:packages/http":
+  version: 0.0.0-use.local
+  resolution: "@waymark/http@workspace:packages/http"
+  dependencies:
+    "@waymark/core": "workspace:^"
+    find-my-way: "npm:^9.10.0"
+    tsdown: "npm:^0.23.7"
+  languageName: unknown
+  linkType: soft
 
 "@yuku-toolchain/darwin-arm64@npm:0.28.1":
   version: 0.28.1
@@ -1101,17 +1101,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"treeline@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "treeline@workspace:."
-  dependencies:
-    "@types/node": "npm:^24.19.2"
-    oxfmt: "npm:^0.78.0"
-    oxlint: "npm:^1.93.0"
-    typescript: "npm:^7.0.2"
-  languageName: unknown
-  linkType: soft
-
 "tsdown@npm:^0.23.7":
   version: 0.23.7
   resolution: "tsdown@npm:0.23.7"
@@ -1337,6 +1326,17 @@ __metadata:
   checksum: 10c0/0bad45304bd0b3d2e56e4bdb422a43863c7a86902741eb632adb104ea37e1213706e08be4eaa7b3e28f843658be56ace16081d3ed3478477a5872f94a83ef7d0
   languageName: node
   linkType: hard
+
+"waymark@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "waymark@workspace:."
+  dependencies:
+    "@types/node": "npm:^24.19.2"
+    oxfmt: "npm:^0.78.0"
+    oxlint: "npm:^1.93.0"
+    typescript: "npm:^7.0.2"
+  languageName: unknown
+  linkType: soft
 
 "yuku@npm:^0.28.0":
   version: 0.28.1

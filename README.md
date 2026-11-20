@@ -1,24 +1,24 @@
-# Treeline
+# Waymark
 
 A small file-based router: the folder tree is the route table.
 
-- [`@treeline/cli`](packages/cli): commands for a CLI
-- [`@treeline/http`](packages/http): routes for an HTTP server, on find-my-way
-- `@treeline/core`: what both share; private, bundled into the other two
+- [`@waymark/cli`](packages/cli): commands for a CLI
+- [`@waymark/http`](packages/http): routes for an HTTP server, on find-my-way
+- `@waymark/core`: what both share; private, bundled into the other two
 
 ## Install
 
-Treeline is not on npm. Yarn 4 fetches git dependencies only from approved repositories, so add it to `.yarnrc.yml`:
+Waymark is not on npm. Yarn 4 fetches git dependencies only from approved repositories, so add it to `.yarnrc.yml`:
 
 ```yaml
 approvedGitRepositories:
-    - "https://github.com/OKThomas1/treeline.git"
+    - "https://github.com/OKThomas1/waymark.git"
 ```
 
 Then install a package from the repo, pinned to a tag:
 
 ```sh
-yarn add "@treeline/cli@github:OKThomas1/treeline#workspace=@treeline/cli&tag=v0.1.0"
+yarn add "@waymark/cli@github:OKThomas1/waymark#workspace=@waymark/cli&tag=v0.2.0"
 ```
 
 The package builds when it is installed.

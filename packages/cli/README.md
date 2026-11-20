@@ -1,4 +1,4 @@
-# @treeline/cli
+# @waymark/cli
 
 File-based commands for a CLI.
 
@@ -16,7 +16,7 @@ commands/
 ## Entry
 
 ```ts
-import { runCli } from "@treeline/cli"
+import { runCli } from "@waymark/cli"
 
 await runCli({ name: "mycli", dir: new URL("./commands", import.meta.url) })
 ```
@@ -28,7 +28,7 @@ await runCli({ name: "mycli", dir: new URL("./commands", import.meta.url) })
 A command file default-exports `createCommand`. Everything except `run` is optional.
 
 ```ts
-import { createCommand } from "@treeline/cli"
+import { createCommand } from "@waymark/cli"
 
 export default createCommand({
     description: "Approve a secret",

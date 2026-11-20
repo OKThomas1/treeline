@@ -1,12 +1,12 @@
 {
-    "name": "treeline",
+    "name": "waymark",
     "private": true,
     "workspaces": [
         "packages/*"
     ],
     "type": "module",
     "scripts": {
-        "build": "yarn workspaces foreach -A --exclude treeline run build",
+        "build": "yarn workspaces foreach -A --exclude waymark run build",
         "typecheck": "tsc -b",
         "lint": "oxlint",
         "fmt": "oxfmt",

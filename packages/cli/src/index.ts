@@ -1,5 +1,5 @@
 import { parseArgs, type ParseArgsOptionsConfig } from "node:util"
-import { load, scan } from "@treeline/core"
+import { load, scan } from "@waymark/core"
 
 export type ArgDef = {
     description?: string
